@@ -24,6 +24,19 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
     }
 
     @Override
+    public String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum fields[]) {
+        StringBuilder sb = new StringBuilder();
+        for (JdbcRowMapper.FieldsEnum field : fields) {
+            sb.append(field.toString());
+            sb.append("= :");
+            sb.append(field.toString());
+            sb.append(" AND ");
+        }
+        sb.delete(sb.length() - 5, sb.length());
+        return sb.toString();
+    }
+
+    @Override
     public String generateInsert() {
         StringBuilder sb = new StringBuilder("INSERT INTO ").append(rowMapper.getTableName()).append(" (");
         StringBuilder lFields = new StringBuilder();
