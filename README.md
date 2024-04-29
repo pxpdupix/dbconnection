@@ -77,25 +77,31 @@ public class ClienteRowMapper extends JdbcRowMapper<Cliente> {
     }
 
 // Interact with the database
-public class ClienteDAO {
-    private ConnectionFactory.ConnectionFactoryBuilder connectionBuilder;
-    private IJdbcRepositorySQLHelper helper;
+public class ClientDAO {
+    private final ConnectionFactory.ConnectionFactoryBuilder connectionBuilder;
+    private final SQLRepositoryHelper<Client> helper;
 
-    public ClienteDAO(SupportedEngine engine, String host, int port, String user, String password, String database) {
+    public ClientDAO(SupportedEngine engine, String host, int port, String user, String password, String database) {
         this.connectionBuilder = ConnectionFactory.engine(engine).host(host).port(port).user(user).password(password).schema(database);
-        this.helper = SQLHelperFactory.reloadSQL(engine, new ClienteRowMapper()).build();
+        this.helper = new JdbcCrudRepository<>(new ClientRowMapper());
     }
 
-    public void insertarCliente(Cliente cliente) throws SQLException {
+    public void getAllClients() throws SQLException {
+        try (Connection connection = connectionBuilder.build()){
+            String sql = helper.generateSelectAll();
+        }
+    }
+
+    public void insertClient(Client cliente) throws SQLException {
         try (Connection connection = connectionBuilder.build()){
             String sql = helper.generateInsert();
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 preparedStatement.setString(1, cliente.getNif());
-                preparedStatement.setString(2, cliente.getNombre());
-                preparedStatement.setString(3, cliente.getApellido1());
-                preparedStatement.setString(4, cliente.getApellido2());
-                preparedStatement.setString(5, cliente.getDireccion());
-                preparedStatement.setInt(6, cliente.getTelefono());
+                preparedStatement.setString(2, cliente.getName());
+                preparedStatement.setString(3, cliente.getLastName1());
+                preparedStatement.setString(4, cliente.getLastName2());
+                preparedStatement.setString(5, cliente.getAddress());
+                preparedStatement.setInt(6, cliente.getTelephone());
                 preparedStatement.setString(7, cliente.getEmail());
                 int rowsInserted = preparedStatement.executeUpdate();
                 if (rowsInserted > 0) {
