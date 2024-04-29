@@ -42,6 +42,22 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
     }
 
     @Override
+    public String generateSelectOneByPrimaryKey(JdbcRowMapper.FieldsEnum PKfield) {
+        StringBuilder sb = new StringBuilder("SELECT ");
+        for (JdbcRowMapper.FieldsEnum field : this.fields) {
+            sb.append(field.toString()).append(", ");
+        }
+        sb.setLength(sb.length() - 2);
+        sb.append(" FROM ").append(rowMapper.getTableName()).append(" WHERE ");
+        if (PKfield.isPrimaryKey()) {
+            sb.append(PKfield.toString());
+            sb.append(" = ");
+            sb.append("?");
+        }
+        return sb.toString();
+    }
+
+    @Override
     public String generateInsert() {
         StringBuilder sb = new StringBuilder("INSERT INTO ").append(rowMapper.getTableName()).append(" (");
         StringBuilder lFields = new StringBuilder();

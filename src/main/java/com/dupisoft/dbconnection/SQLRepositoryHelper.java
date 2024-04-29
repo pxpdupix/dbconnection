@@ -6,7 +6,8 @@ public interface SQLRepositoryHelper<T> {
 
     String generateSelectAll();
 
-    String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum fields[]);
+    String generateSelectOneByPrimaryKey(JdbcRowMapper.FieldsEnum field);
+
     String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum[] fields);
 
     String generateInsert();
