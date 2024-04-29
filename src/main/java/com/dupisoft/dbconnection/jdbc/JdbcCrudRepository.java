@@ -26,7 +26,6 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
     @Override
     public String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum fields[]) {
         StringBuilder sb = new StringBuilder("SELECT ");
-        StringBuilder placeholders = new StringBuilder();
         for (JdbcRowMapper.FieldsEnum field : this.fields) {
             sb.append(field.toString()).append(", ");
         }
