@@ -1,6 +1,6 @@
-package com.dupisoft.dbconnection.jdbc;
+package com.dupisoft.dbconnection;
 
-public interface IJdbcRepositorySQLHelper<T> {
+public interface SQLRepositoryHelper<T> {
     String generateSelectAll();
     String generateInsert();
     String generateUpdate();

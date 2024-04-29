@@ -1,6 +1,8 @@
 package com.dupisoft.dbconnection.jdbc;
 
-public class JdbcCrudRepository<T> implements IJdbcRepositorySQLHelper<T> {
+import com.dupisoft.dbconnection.SQLRepositoryHelper;
+
+public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
 
     private JdbcRowMapper<T> rowMapper;
     private JdbcRowMapper.FieldsEnum[] fields;
