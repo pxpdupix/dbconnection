@@ -24,7 +24,7 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
     }
 
     @Override
-    public String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum fields[]) {
+    public String generateSelectOneWhereFields(JdbcRowMapper.FieldsEnum[] fields) {
         StringBuilder sb = new StringBuilder("SELECT ");
         for (JdbcRowMapper.FieldsEnum field : this.fields) {
             sb.append(field.toString()).append(", ");
@@ -38,6 +38,22 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
             sb.append(" AND ");
         }
         sb.delete(sb.length() - 7, sb.length());
+        return sb.toString();
+    }
+
+    @Override
+    public String generateSelectOneByPrimaryKey(JdbcRowMapper.FieldsEnum PKfield) {
+        StringBuilder sb = new StringBuilder("SELECT ");
+        for (JdbcRowMapper.FieldsEnum field : this.fields) {
+            sb.append(field.toString()).append(", ");
+        }
+        sb.setLength(sb.length() - 2);
+        sb.append(" FROM ").append(rowMapper.getTableName()).append(" WHERE ");
+        if (PKfield.isPrimaryKey()) {
+            sb.append(PKfield.toString());
+            sb.append(" = ");
+            sb.append("?");
+        }
         return sb.toString();
     }
 
