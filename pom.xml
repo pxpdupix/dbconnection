@@ -6,8 +6,14 @@
 
     <groupId>com.dupisoft</groupId>
     <artifactId>dbconnection</artifactId>
-    <version>1.0.0</version>
-
+    <version>1.0.1-SNAPSHOT</version>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub pxpdupix Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/pxpdupix/dbconnection</url>
+        </repository>
+    </distributionManagement>
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
