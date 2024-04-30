@@ -98,6 +98,20 @@ public class JdbcCrudRepository<T> implements SQLRepositoryHelper<T> {
     }
 
     @Override
+    public String generateUpdateFields(JdbcRowMapper.FieldsEnum[] fields) {
+        StringBuilder sb = new StringBuilder("UPDATE ").append(rowMapper.getTableName()).append(" SET ");
+        for (JdbcRowMapper.FieldsEnum field : this.fields) {
+            if (!field.isPrimaryKey()) {
+                sb.append(field.toString());
+                sb.append(" = ");
+                sb.append("?, ");
+            }
+        }
+        sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
+    @Override
     public String generateDelete() {
         StringBuilder sb = new StringBuilder("DELETE FROM ").append(rowMapper.getTableName()).append(" WHERE ");
         for (JdbcRowMapper.FieldsEnum field : fields) {

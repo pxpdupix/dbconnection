@@ -14,5 +14,7 @@ public interface SQLRepositoryHelper<T> {
 
     String generateUpdate();
 
+    String generateUpdateFields(JdbcRowMapper.FieldsEnum[] fields);
+
     String generateDelete();
 }
