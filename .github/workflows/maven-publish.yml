@@ -18,7 +18,7 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Set Maven project version
-        run: $( mvn versions:set -DremoveSnapshot )
+        run: mvn versions:set -DremoveSnapshot
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
@@ -26,4 +26,4 @@ jobs:
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
