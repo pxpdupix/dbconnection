@@ -1,5 +1,6 @@
 package com.dupisoft.dbconnection.jdbc;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public abstract class JdbcRowMapper<T extends Object> {
     }
 
     public T mapRow(ResultSet rs, int i) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setPreparedStatement(PreparedStatement preparedStatement, T entity) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
